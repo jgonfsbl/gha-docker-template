@@ -1,3 +1,3 @@
-# gha-move-template
+# gha-docker-template
 
-GitHub Action template project
+GitHub Action for Docker template 
