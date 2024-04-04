@@ -1,0 +1,58 @@
+# ##################################### #
+#                                       #
+#   How-To build this container image   #
+#                                       #
+# ##################################### #
+#
+#
+# Local build
+# -----------
+# docker build \
+#   -f Dockerfile \
+#   --build-arg VERSION=`cat src/VERSION` \
+#   --build-arg GIT_BRANCH=`git branch --show-current` \
+#   -t safebytelabs-jgonf/gha-docker-demo:`cat src/VERSION` .
+#
+#
+# Platform specific images (when you build for your own platform)
+# ---------------------------------------------------------------
+# docker build \
+#   --build-arg BUILD_DATE=`date -u +"%Y-%m-%d"` \
+#   --build-arg VERSION=`cat src/VERSION` \
+#   --build-arg GIT_BRANCH=`git branch --show-current` \
+#   -t ghcr.io/safebytelabs-jgonf/gha-docker-demo:`cat src/VERSION` .
+#
+#
+# Cross-compile platform independent images (when you use a build facility
+# in your platform to cross-compile for another platform)
+# ------------------------------------------------------------------------
+# docker buildx ls
+# docker buildx create --name testbuilder
+# docker buildx use testbuilder
+# docker buildx inspect --bootstrap
+# docker buildx build \
+#   --platform linux/amd64 linux/amd64/v2 linux/amd64/v3 \
+#              linux/arm64,linux/arm/v7, linux/arm/v6 \
+#   --build-arg BUILD_DATE=`date -u +"%Y-%m-%d"` \
+#   --build-arg VERSION=`cat src/VERSION` \
+#   --build-arg GIT_BRANCH=`git branch --show-current` \
+#   -t ghcr.io/safebytelabs-jgonf/gha-docker-demo:`cat src/VERSION` --push .
+#
+# #############################################################################
+
+FROM alpine3.19
+LABEL maintainer="Jonathan Gonzalez <jgonf@safebytelabs.com>"
+ARG GIT_BRANCH
+
+# - Let service stop gracefully
+STOPSIGNAL SIGQUIT
+
+# - Install packages
+RUN apk add --no-cache PACKAGE
+
+# - Copy project files into working directory
+COPY ./src/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# - Run the program
+CMD [ "/entrypoint.sh" ]

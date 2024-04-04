@@ -49,9 +49,10 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONFAULTHANDLER 1
 
 
-# Let service stop gracefully
+# - Let service stop gracefully
 STOPSIGNAL SIGQUIT
 
+# - Install packages
 RUN apk add --no-cache $RUN_DEPENDENCIES \
     && python3 -m ensurepip              \
     && pip3 install -U pip               \
