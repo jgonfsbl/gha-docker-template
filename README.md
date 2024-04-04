@@ -1,3 +1,3 @@
-# gha-move-cards
+# gha-move-template
 
 GitHub Action template project
