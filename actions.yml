@@ -1,26 +1,39 @@
-name: Hello, World!
-description: Greet someone and record the time
-author: GitHub Actions
+name: Custom GitHub Action
+description: Custom GitHub Action running into a Docker container
+author: Jonathan Gonzalez <jgonf@safebytelabs.com>
 
-# Define inputs here.
+
+#
+# Define inputs here
+#
 inputs:
+
   token:
     description: 'GitHub PAT'
     required: true
-  who-to-greet:
-    description: Who to greet
+
+  my_variable_here:
+    description: This is a customized variable
     required: true
-    default: World
+    default: FooBar
 
-# Define outputs here.
+
+#
+# Define outputs here
+#
 outputs:
-  time:
-    description: The time we greeted you
 
+  time:
+    description: The time when this gets executed
+
+
+#
+# Define execution type here
+#
 runs:
+
   using: docker
-  # image: Dockerfile
   image: docker://ghcr.io/safebytelabs-jgonf/gha-docker-demo:latest
 
   env:
-    INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+    MY_VARIABLE_HERE: ${{ inputs.my_variable_here }}
