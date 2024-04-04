@@ -13,7 +13,7 @@
 
 
 def main() -> None:
-    print("GitHub Actions Docker demo compolete")
+    print("GitHub Actions Docker demo complete")
 
 
 if __name__ == "__main__":
