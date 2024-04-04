@@ -54,5 +54,5 @@ RUN apk add --no-cache PACKAGE
 COPY ./src/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# - Run the program
-CMD [ "/entrypoint.sh" ]
+# - Run the program with a delay of 1 second (configurable at will)
+CMD [ "/entrypoint.sh", "1" ]
